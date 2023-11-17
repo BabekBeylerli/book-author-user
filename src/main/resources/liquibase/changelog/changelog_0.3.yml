@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-notification-entity
+      author: Babek Beylerli
+      changes:
+        - createTable:
+            tableName: notifications
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: sender_id
+                  type: int
+              - column:
+                  name: recipient_id
+                  type: int
+              - column:
+                  name: message
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: datetime
+        - addForeignKeyConstraint:
+            baseTableName: notifications
+            baseColumnNames: sender_id
+            constraintName: fk_notifications_sender
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: notifications
+            baseColumnNames: recipient_id
+            constraintName: fk_notifications_recipient
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE

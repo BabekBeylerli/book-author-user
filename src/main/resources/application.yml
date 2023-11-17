@@ -1,0 +1,28 @@
+spring:
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yml
+  datasource:
+    username: postgres
+    password: 12345
+    url: jdbc:postgresql://localhost:5432/ingress
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    show-sql: true
+
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: babekbaylar@gmail.com
+    password: Babek2004
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+
+

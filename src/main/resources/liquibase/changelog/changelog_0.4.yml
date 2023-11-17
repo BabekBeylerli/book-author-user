@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-books-table
+      author: Babek Beylerli
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: updated_at
+                  type: datetime
+              - column:
+                  name: author_id
+                  type: int
+                  constraints:
+                    nullable: true
+        - addUniqueConstraint:
+            tableName: books
+            columnNames: name
+
+  - changeSet:
+      id: add-foreign-key-author
+      author: Babek Beylerli
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: books
+            baseColumnNames: author_id
+            constraintName: fk_books_author
+            referencedTableName: users
+            referencedColumnNames: id

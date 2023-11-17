@@ -1,0 +1,115 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-table
+      author: Babek Beylerli
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: age
+                  type: int
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: updated_at
+                  type: datetime
+
+  - changeSet:
+      id: create-user-book-table
+      author: Babek Beylerli
+      changes:
+        - createTable:
+            tableName: user_book
+            columns:
+              - column:
+                  name: user_id
+                  type: int
+              - column:
+                  name: book_id
+                  type: int
+            constraints:
+              primaryKey: true
+            foreignKeyConstraints:
+              - baseColumnNames: user_id
+                baseTableName: user_book
+                referencedColumnNames: id
+                referencedTableName: users
+                constraintName: fk_user_book_user
+              - baseColumnNames: book_id
+                baseTableName: user_book
+                referencedColumnNames: id
+                referencedTableName: books
+                constraintName: fk_user_book_book
+
+  - changeSet:
+      id: create-user-roles-table
+      author: Babek Beylerli
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: int
+              - column:
+                  name: role_id
+                  type: int
+            constraints:
+              primaryKey: true
+            foreignKeyConstraints:
+              - baseColumnNames: user_id
+                baseTableName: user_roles
+                referencedColumnNames: id
+                referencedTableName: users
+                constraintName: fk_user_roles_user
+              - baseColumnNames: role_id
+                baseTableName: user_roles
+                referencedColumnNames: id
+                referencedTableName: roles
+                constraintName: fk_user_roles_role
+
+  - changeSet:
+      id: create-user-subscriptions-table
+      author: Babek Beylerli
+      changes:
+        - createTable:
+            tableName: user_subscriptions
+            columns:
+              - column:
+                  name: author_id
+                  type: int
+              - column:
+                  name: subscriber_id
+                  type: int
+            constraints:
+              primaryKey: true
+            foreignKeyConstraints:
+              - baseColumnNames: author_id
+                baseTableName: user_subscriptions
+                referencedColumnNames: id
+                referencedTableName: users
+                constraintName: fk_user_subscriptions_author
+              - baseColumnNames: subscriber_id
+                baseTableName: user_subscriptions
+                referencedColumnNames: id
+                referencedTableName: users
+                constraintName: fk_user_subscriptions_subscriber
